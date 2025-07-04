@@ -73,9 +73,21 @@ export class EnrollmentService {
   }
 
   /**service for student to drop enrolled course */
-  async dropCourse(enrollmentId: number, studentId: number):P{
-
+  async dropCourse(enrollmentId: number, studentId: number):Promise<Enrollment>{
+    const enrollment = await this.getEnrollmentById(enrollmentId);
+    if (enrollment.status !== 'approved') {
+      throw new ConflictException('Enrollment not approved');
+    }
+    if (enrollment.student.id !== studentId) {
+      throw new ConflictException('Student not authorized to drop course');
+    }
+    //drop course
+    enrollment.status = 'dropped';
+    enrollment.droppedAt = new Date();
+    enrollment.droppedBy = { id: studentId } as User;
+    return this.enrollmentRepository.save(enrollment);
   }
+
 
   async getEnrollmentById(enrollmentId: number): Promise<Enrollment> {
     const enrollment = this.enrollmentRepository.findOne({
