@@ -48,8 +48,9 @@ export class EnrollmentService {
     if (!enrollment || enrollment.status === 'approved') {
       throw new ConflictException('Enrollment not found or already approved');
     }
-    const update = { ...enrollment, status };
-
+     if (!enrollment || enrollment.status === 'approved') {
+      throw new ConflictException('Enrollment not found or already approved');
+    }
     //status actions 
     //if the status is approved, the admin will be the approvedBy
     //if the status is rejected, the admin will be the rejectedBy
@@ -70,8 +71,6 @@ export class EnrollmentService {
     if (!action) throw new ConflictException('Invalid status');
     action(); //call the function based on the status
 
-    //update enrollment
-    enrollment;
     return this.enrollmentRepository.save(enrollment);
   }
 
