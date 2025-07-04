@@ -6,9 +6,11 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  Index,
 } from 'typeorm';
 import { Course } from '../../courses/entities/course.entity';
 
+@Index(['student', 'course'], { unique: true }) // prevent duplicate enrollments and faster lookup
 @Entity()
 export class Enrollment {
   @PrimaryGeneratedColumn()
