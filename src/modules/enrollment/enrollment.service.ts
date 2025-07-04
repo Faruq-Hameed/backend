@@ -82,9 +82,7 @@ export class EnrollmentService {
       throw new ConflictException('Student not authorized to drop course');
     }
     //drop course
-    enrollment.status = 'dropped';
     enrollment.droppedAt = new Date();
-    enrollment.droppedBy = { id: studentId } as User;
     return this.enrollmentRepository.save(enrollment);
   }
 
