@@ -4,6 +4,7 @@ import { EnrollCourseDto } from './dtos/enroll-course.dto';
 import { CourseService } from '../courses/courses.service';
 import { ConflictException, NotFoundException } from '@nestjs/common';
 import { UpdateEnrollmentStatusDto } from './dtos/update-enrollment-status.dto';
+import { User } from '../user/entities/user.entity';
 
 export class EnrollmentService {
   constructor(
@@ -60,7 +61,7 @@ export class EnrollmentService {
       rejected: () => {
         enrollment.status = 'rejected';
         enrollment.rejectedAt = new Date();
-        enrollment.rejectedBy = { id: adminId } as Pa;
+        enrollment.rejectedBy = { id: adminId } as User;
       },
     };
 
