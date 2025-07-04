@@ -45,10 +45,10 @@ export class EnrollmentService {
   ): Promise<Enrollment> {
     const { enrollmentId, status } = updateEnrollmentStatusDto;
     const enrollment = await this.getEnrollmentById(enrollmentId);
-     if (enrollment.status === 'approved') {
+    if (enrollment.status === 'approved') {
       throw new ConflictException('Enrollment already approved');
     }
-    //status actions 
+    //status actions
     //if the status is approved, the admin will be the approvedBy
     //if the status is rejected, the admin will be the rejectedBy
     const statusActions = {
@@ -76,10 +76,10 @@ export class EnrollmentService {
       where: { id: enrollmentId },
       relations: ['student', 'course'],
     });
-        if (!enrollment ) {
+    if (!enrollment) {
       throw new NotFoundException('Enrollment not found');
     }
-    return 
+    return enrollment;
   }
 
   async getEnrollmentsByStudent(studentId: number): Promise<Enrollment[]> {
