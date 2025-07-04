@@ -46,7 +46,7 @@ export class EnrollmentService {
     const { enrollmentId, status } = updateEnrollmentStatusDto;
     const enrollment = await this.getEnrollmentById(enrollmentId);
     if (!enrollment ) {
-      throw new NotFoundException('Enrollment not found');
+      throw new NotFoundException('Enrollment not found'.);
     }
      if (enrollment.status === 'approved') {
       throw new ConflictException('Enrollment already approved');
