@@ -48,7 +48,7 @@ export class EnrollmentService {
     if (!enrollment || enrollment.status === 'approved') {
       throw new ConflictException('Enrollment not found or already approved');
     }
-     if (!enrollment || enrollment.status === 'approved') {
+     if (enrollment.status === 'approved') {
       throw new ConflictException('Enrollment not found or already approved');
     }
     //status actions 
