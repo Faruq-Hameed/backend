@@ -72,10 +72,14 @@ export class EnrollmentService {
   }
 
   async getEnrollmentById(enrollmentId: number): Promise<Enrollment> {
-    const this.enrollmentRepository.findOne({
+    const enrollment = this.enrollmentRepository.findOne({
       where: { id: enrollmentId },
       relations: ['student', 'course'],
     });
+        if (!enrollment ) {
+      throw new NotFoundException('Enrollment not found');
+    }
+    return 
   }
 
   async getEnrollmentsByStudent(studentId: number): Promise<Enrollment[]> {
