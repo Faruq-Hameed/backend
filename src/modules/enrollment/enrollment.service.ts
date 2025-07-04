@@ -41,13 +41,37 @@ export class EnrollmentService {
   /**update enrollment status by admin*/
   async approveEnrollment(
     updateEnrollmentStatusDto: UpdateEnrollmentStatusDto,
+    adminId: number,
   ): Promise<Enrollment> {
-    const { enrollmentId } = updateEnrollmentStatusDto;
+    const { enrollmentId, status } = updateEnrollmentStatusDto;
     const enrollment = await this.getEnrollmentById(enrollmentId);
     if (!enrollment || enrollment.status === 'approved') {
       throw new ConflictException('Enrollment not found or already approved');
     }
-    enrollment.status = 'approved';
+    const update = { ...enrollment, status };
+
+    //status actions 
+    //if the status is approved, the admin will be the approvedBy
+    //if the status is rejected, the admin will be the rejectedBy
+    const statusActions = {
+      approved: () => {
+        enrollment.status = 'approved';
+        enrollment.approvedAt = new Date();
+        enrollment.approvedBy = { id: adminId } as any;
+      },
+      rejected: () => {
+        enrollment.status = 'rejected';
+        enrollment.rejectedAt = new Date();
+        enrollment.rejectedBy = { id: adminId } as any;
+      },
+    };
+
+    const action = statusActions[status];
+    if (!action) throw new ConflictException('Invalid status');
+    action(); //call the function based on the status
+
+    //update enrollment
+    enrollment;
     return this.enrollmentRepository.save(enrollment);
   }
 
