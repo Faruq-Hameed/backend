@@ -28,14 +28,19 @@ export class Enrollment {
   @ManyToOne(() => User, { nullable: true })
   rejectedBy: User;
 
+
+
+  @Column({ default: 'pending' })
+  status: 'pending' | 'approved' | 'rejected';
+
   @Column( { nullable: true })
   approvedAt: Date
 
   @Column( { nullable: true })
   rejectedAt: Date
 
-  @Column({ default: 'pending' })
-  status: 'pending' | 'approved' | 'rejected';
+  @Column( { nullable: true })
+  droppedAt: Date
 
   @CreateDateColumn()
   createdAt: Date;

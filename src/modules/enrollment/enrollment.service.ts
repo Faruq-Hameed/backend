@@ -76,7 +76,7 @@ export class EnrollmentService {
   async dropCourse(enrollmentId: number, studentId: number):Promise<Enrollment>{
     const enrollment = await this.getEnrollmentById(enrollmentId);
     if (enrollment.status !== 'approved') {
-      throw new ConflictException('Enrollment not approved');
+      throw new ConflictException('You can only drop after approval');
     }
     if (enrollment.student.id !== studentId) {
       throw new ConflictException('Student not authorized to drop course');
