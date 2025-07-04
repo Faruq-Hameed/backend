@@ -24,8 +24,8 @@ export class CourseService {
   // Create a new course (lecturer)
   async createCourse(lecturerId: number, dto: CreateCourseDto) {
     const existingTitle = await this.getCourseByTitle(dto.title);
-    if(existingTitle){
-        throw new ConflictException('Course title already exists');
+    if (existingTitle) {
+      throw new ConflictException('Course title already exists');
     }
     const course = this.courseRepo.create({
       ...dto,
@@ -95,4 +95,8 @@ export class CourseService {
 
     return this.courseRepo.remove(course);
   }
+
+
+
+
 }

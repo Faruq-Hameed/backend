@@ -8,7 +8,7 @@ import {
   OneToMany,
 } from 'typeorm';
 import { User } from 'src/modules/user/entities/user.entity';
-import { Enrollment } from './enrollement.entity';
+import { Enrollment } from './enrollment.entity';
 import { Assignment } from './assignment.entity';
 
 @Entity()

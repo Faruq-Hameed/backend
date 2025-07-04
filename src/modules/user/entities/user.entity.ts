@@ -9,7 +9,7 @@ import {
 
 import { UserRole } from 'src/utils/userRole';
 import { Course } from 'src/modules/courses/entities/course.entity';
-import { Enrollment } from 'src/modules/courses/entities/enrollement.entity';
+import { Enrollment } from 'src/modules/courses/entities/enrollment.entity';
 import { Assignment } from 'src/modules/courses/entities/assignment.entity';
 
 @Entity()
@@ -44,5 +44,5 @@ export class User {
   enrollments: Enrollment[];
 
   @OneToMany(() => Assignment, (assignment) => assignment.student)
-assignments: Assignment[];
+  assignments: Assignment[];
 }
