@@ -45,9 +45,6 @@ export class EnrollmentService {
   ): Promise<Enrollment> {
     const { enrollmentId, status } = updateEnrollmentStatusDto;
     const enrollment = await this.getEnrollmentById(enrollmentId);
-    if (!enrollment ) {
-      throw new NotFoundException('Enrollment not found'.);
-    }
      if (enrollment.status === 'approved') {
       throw new ConflictException('Enrollment already approved');
     }
@@ -75,7 +72,7 @@ export class EnrollmentService {
   }
 
   async getEnrollmentById(enrollmentId: number): Promise<Enrollment> {
-    return this.enrollmentRepository.findOne({
+    const this.enrollmentRepository.findOne({
       where: { id: enrollmentId },
       relations: ['student', 'course'],
     });
