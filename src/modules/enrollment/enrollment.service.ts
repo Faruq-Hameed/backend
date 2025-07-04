@@ -55,7 +55,7 @@ export class EnrollmentService {
       approved: () => {
         enrollment.status = 'approved';
         enrollment.approvedAt = new Date();
-        enrollment.approvedBy = { id: adminId } as <User> ;
+        enrollment.approvedBy = { id: adminId } as Par<User> ;
       },
       rejected: () => {
         enrollment.status = 'rejected';
