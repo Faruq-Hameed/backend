@@ -2,7 +2,7 @@ import { Repository } from 'typeorm';
 import { Enrollment } from './entities/enrollment.entity';
 import { EnrollCourseDto } from './dtos/enroll-course.dto';
 import { CourseService } from '../courses/courses.service';
-import { ConflictException } from '@nestjs/common';
+import { ConflictException, NotFoundException } from '@nestjs/common';
 import { UpdateEnrollmentStatusDto } from './dtos/update-enrollment-status.dto';
 
 export class EnrollmentService {
@@ -45,11 +45,11 @@ export class EnrollmentService {
   ): Promise<Enrollment> {
     const { enrollmentId, status } = updateEnrollmentStatusDto;
     const enrollment = await this.getEnrollmentById(enrollmentId);
-    if (!enrollment || enrollment.status === 'approved') {
-      throw new ConflictException('Enrollment not found or already approved');
+    if (!enrollment ) {
+      throw new NotFoundException('Enrollment not found');
     }
      if (enrollment.status === 'approved') {
-      throw new ConflictException('Enrollment not found or already approved');
+      throw new ConflictException('Enrollment already approved');
     }
     //status actions 
     //if the status is approved, the admin will be the approvedBy
