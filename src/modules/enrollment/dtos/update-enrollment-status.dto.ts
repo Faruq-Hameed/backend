@@ -5,6 +5,6 @@ export class UpdateEnrollmentStatusDto {
   @IsNumber()
   enrollmentId: number;
 
-  @IsIn(['pending', 'approved', 'rejected'])
-  status: 'pending' | 'approved' | 'rejected';
+  @IsIn([ 'approved', 'rejected'])
+  status:  'approved' | 'rejected';
 }

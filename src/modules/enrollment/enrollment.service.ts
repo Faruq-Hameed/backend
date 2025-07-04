@@ -3,6 +3,7 @@ import { Enrollment } from './entities/enrollment.entity';
 import { EnrollCourseDto } from './dtos/enroll-course.dto';
 import { CourseService } from '../courses/courses.service';
 import { ConflictException } from '@nestjs/common';
+import { UpdateEnrollmentStatusDto } from './dtos/update-enrollment-status.dto';
 
 export class EnrollmentService {
   constructor(
@@ -34,6 +35,40 @@ export class EnrollmentService {
       //the controller that needs the response will await
       student: { id: studentId },
       course: { id: courseId },
+    });
+  }
+
+  /**update enroll */
+  async approveEnrollment(
+    updateEnrollmentStatusDto: UpdateEnrollmentStatusDto,
+  ): Promise<Enrollment> {
+    const { enrollmentId } = updateEnrollmentStatusDto;
+    const enrollment = await this.getEnrollmentById(enrollmentId);
+    if (!enrollment || enrollment.status === 'approved') {
+      throw new ConflictException('Enrollment not found or already approved');
+    }
+    enrollment.status = 'approved';
+    return this.enrollmentRepository.save(enrollment);
+  }
+
+  async getEnrollmentById(enrollmentId: number): Promise<Enrollment> {
+    return this.enrollmentRepository.findOne({
+      where: { id: enrollmentId },
+      relations: ['student', 'course'],
+    });
+  }
+
+  async getEnrollmentsByStudent(studentId: number): Promise<Enrollment[]> {
+    return this.enrollmentRepository.find({
+      where: { student: { id: studentId } },
+      relations: ['student', 'course'],
+    });
+  }
+
+  async getEnrollmentsByCourse(courseId: number): Promise<Enrollment[]> {
+    return this.enrollmentRepository.find({
+      where: { course: { id: courseId } },
+      relations: ['student', 'course'],
     });
   }
 }
