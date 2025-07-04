@@ -38,7 +38,7 @@ export class EnrollmentService {
     });
   }
 
-  /**update enroll */
+  /**update enrollment status by admin*/
   async approveEnrollment(
     updateEnrollmentStatusDto: UpdateEnrollmentStatusDto,
   ): Promise<Enrollment> {

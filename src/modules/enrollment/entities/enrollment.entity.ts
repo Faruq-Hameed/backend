@@ -9,7 +9,6 @@ import {
 } from 'typeorm';
 import { Course } from '../../courses/entities/course.entity';
 
-
 @Entity()
 export class Enrollment {
   @PrimaryGeneratedColumn()
@@ -20,6 +19,18 @@ export class Enrollment {
 
   @ManyToOne(() => Course, (course) => course.enrollments)
   course: Course;
+
+  @ManyToOne(() => User, { nullable: true })
+  approvedBy: User;
+
+  @ManyToOne(() => User, { nullable: true })
+  rejectedBy: User;
+
+  @Column( { nullable: true })
+  approvedAt: Date
+
+  @Column( { nullable: true })
+  rejectedAt: Date
 
   @Column({ default: 'pending' })
   status: 'pending' | 'approved' | 'rejected';
