@@ -72,6 +72,11 @@ export class EnrollmentService {
     return this.enrollmentRepository.save(enrollment);
   }
 
+  /**service for student to drop enrolled course */
+  async dropCourse(enrollmentId: number, studentId: number):P{
+
+  }
+
   async getEnrollmentById(enrollmentId: number): Promise<Enrollment> {
     const enrollment = this.enrollmentRepository.findOne({
       where: { id: enrollmentId },
